@@ -1,0 +1,10 @@
+FROM golang:alpine AS go-build
+WORKDIR /go/src
+COPY ./fullcycle.go .
+RUN go build fullcycle.go
+
+FROM scratch
+WORKDIR /go/src
+COPY --from=go-build /go/src/ .
+
+CMD [ "./fullcycle" ]
